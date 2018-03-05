@@ -17,28 +17,17 @@
  * under the License.
  */
 
-import org.springframework.http.HttpStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.*;
-import org.springframework.web.bind.annotation.*;
 
-import org.springframework.cloud.Cloud;
-import org.springframework.cloud.CloudFactory;
-import com.solace.labs.spring.cloud.core.SolaceMessagingInfo;
-
-@Configuration
-//@ComponentScan
-@RestController
 @EnableAutoConfiguration
 public class Application {
-    public static void main(String[] args) {
-        CloudFactory cloudFactory = new CloudFactory();
-        Cloud cloud = cloudFactory.getCloud();
 
+    private static final Logger LOGGER =  LoggerFactory.getLogger(Application.class);
+
+    public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
 }

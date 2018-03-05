@@ -4,3 +4,6 @@
 .vscode/
 build
 morecars.sh
+.idea
+*.iml
+*/out

@@ -260,6 +260,7 @@ var TopicSubscriber = function (topicName) {
 
     // Callback for session events
     subscriber.sessionEventCb = function (session, event) {
+        console.log('got event ' + event.toString());
         subscriber.log(event.toString());
         if (event.sessionEventCode === solace.SessionEventCode.UP_NOTICE) {
             subscriber.log('=== Successfully connected and ready to subscribe. ===');
@@ -294,10 +295,10 @@ var TopicSubscriber = function (topicName) {
         if (subscriber.session !== null) {
             subscriber.log('Already connected and ready to subscribe.');
         } else {
-            var host = "tcp.apps.pcfdemo.solacemessaging.net:16983";
-            var vpn = "v005";
-            var user = "v005.cu000045";
-            var pw = "26f6a46c-5616-4bb5-bf3c-a8305ab047b4";
+            var host = TRANSPORT_PROPERTIES.host;
+            var vpn = TRANSPORT_PROPERTIES.vpn;
+            var user = TRANSPORT_PROPERTIES.user;
+            var pw = TRANSPORT_PROPERTIES.pw;
             if (host) {
                 subscriber.connectToSolace(host,vpn,user,pw);
                 subscriber.subscribe();

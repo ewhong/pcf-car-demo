@@ -19,37 +19,16 @@
 
 package com.solace.demos.cloudfoundry.scaling.aggregator;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.cloud.Cloud;
-import org.springframework.cloud.CloudFactory;
-import com.solace.labs.spring.cloud.core.SolaceMessagingInfo;
 
-import com.solacesystems.jcsmp.JCSMPException;
-import com.solacesystems.jcsmp.Topic;
-import com.solacesystems.jcsmp.JCSMPFactory;
-import com.solacesystems.jcsmp.JCSMPProperties;
-import com.solacesystems.jcsmp.JCSMPSession;
-import com.solacesystems.jcsmp.JCSMPStreamingPublishEventHandler;
-import com.solacesystems.jcsmp.TextMessage;
-import com.solacesystems.jcsmp.XMLMessageProducer;
-
-@Configuration
-@ComponentScan
-@RestController
 @EnableAutoConfiguration
 public class Application {
-    public static void main(String[] args) throws JCSMPException {
-        CloudFactory cloudFactory = new CloudFactory();
-        Cloud cloud = cloudFactory.getCloud();
-
+    public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
 }

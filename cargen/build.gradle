@@ -1,8 +1,10 @@
 buildscript {
 	ext {
-		springBootVersion = '1.3.3.RELEASE'
-		solaceJCSMPVersion = '10.+'
-		solaceCloudVersion = '1.0.+'
+        springBootVersion = '1.4.2.RELEASE'
+        springCloudVersion = '1.2.3.RELEASE'
+        solaceJCSMPVersion = '10.+'
+        solaceJavaSpringBootVersion = '1.0.+'
+        solaceCloudVersion = '2.0.+'
 	}
     repositories {
     	mavenCentral()
@@ -29,17 +31,26 @@ repositories {
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
-    
-	// Spring Cloud Connectors
-	compile("org.springframework.boot:spring-boot-starter-cloud-connectors:${springBootVersion}")
-	
+
+    // Spring Cloud Connectors
+    compile("org.springframework.cloud:spring-cloud-spring-service-connector:${springCloudVersion}")
+    compile("org.springframework.cloud:spring-cloud-cloudfoundry-connector:${springCloudVersion}")
+
+    // Alternatively using spring-boot-starter inclusion...
+    //compile("org.springframework.boot:spring-boot-starter-cloud-connectors:${springBootVersion}")
+
+    compile("org.json:json:20151123")
     // Solace Messaging Spring Cloud Connector
- 	compile("com.solace.labs.cloud.cloudfoundry:solace-labs-spring-cloud-connector:${solaceCloudVersion}")
-    
+    compile("com.solace.cloud.cloudfoundry:solace-spring-cloud-connector:${solaceCloudVersion}")
+
     // Solace Java API
     compile("com.solacesystems:sol-jcsmp:${solaceJCSMPVersion}")
-    
-    compile("org.json:json:20151123")
+
+    // Solace Java API & auto-configuration
+    compile("com.solace.spring.boot:solace-java-spring-boot-starter:${solaceJavaSpringBootVersion}")
+
+    compile("com.solace.spring.boot:solace-java-spring-boot-autoconfigure:${solaceJavaSpringBootVersion}")
+
 }
 
 task wrapper(type: Wrapper) {

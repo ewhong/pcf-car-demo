@@ -73,6 +73,14 @@ var MyGame = {};
 (function(MyGame, undefined) {
     'use strict';
 
+    var TRANSPORT_PROPERTIES = {
+        host : "mr-91b692du2x.messaging.solace.cloud",
+        port:  20264,
+        vpn  : "msgvpn-91b692imr1",
+        user : "solace-cloud-client",
+        pw   : "secret",
+    }
+
     MyGame.Game = function(game) {
         this.ready = false;
     };
@@ -197,11 +205,11 @@ var MyGame = {};
       
       var carId = generateID();
 
-        var hostname = "tcp.apps.pcfdemo.solacemessaging.net";
-        var port = 50977;
+        var hostname = TRANSPORT_PROPERTIES.host;
+        var port = TRANSPORT_PROPERTIES.port;
         var clientId = carId;
-        var userName = "v005.cu000045";
-        var passWord = "26f6a46c-5616-4bb5-bf3c-a8305ab047b4";
+        var userName = TRANSPORT_PROPERTIES.user;
+        var passWord = TRANSPORT_PROPERTIES.pw;
 
         // Create an MQTT client instance
         var client = new Paho.MQTT.Client(hostname, port, clientId);

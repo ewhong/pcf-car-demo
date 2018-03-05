@@ -61,3 +61,131 @@ Here are some interesting links if you're new to these concepts:
 * [Horizontal Scaling of Aggregated Microservices Using Solace Messaging in Cloud Foundry](http://dev.solace.com/solution-demos/horizontal-scaling-aggregated-microservices/)
 * [REST vs Messaging for Microservices](http://www.slideshare.net/ewolff/rest-vs-messaging-for-microservices)
 * [Pivotal Network](https://network.pivotal.io/)
+
+# How to run this demo outside of PCF
+
+This demo is actually 3 spring boot applications, 2 out the 3 applications,  simply serve web applications.
+
+* `cargen`: a spring boot application that keeps the car map up to date and reacts to events from the cardemo application
+* `carmap`: serves the car map web application over port 8080
+* `cardemo`: serves the car demo web application over port 9090
+
+The flow of events is as follows:
+```
+cardemo -- MQTT --> solace -- SMF -> cargen 
+
+cargent -- SMF --> solace -- solace web messaging --> car map
+```
+
+## Step 1: Configure and run cargen
+
+*  Update the Solace Messaging coordinates in `cargen/src/main/resources/application.properties` file
+```
+solace.java.host=<Solace Messaging Host or IP>:<port>
+solace.java.msgVpn=<Solace message VPN name>
+solace.java.clientUsername=<Client UserName>
+solace.java.clientPassword=<Client Password>
+server.port=7070
+
+```
+
+For example (using Solace Cloud )
+```
+solace.java.host=mr-91b692du2x.messaging.solace.cloud:20256
+solace.java.msgVpn=msgvpn-91b692imr1
+solace.java.clientUsername=solace-cloud-client
+solace.java.clientPassword=secret
+```
+
+* From a shell in the `cargen` directory
+```
+$ ../gradlew build
+
+```
+Then
+```
+$ ../gradlew bootRun
+
+```
+You should now have the cargen spring boot application running on port 7070
+
+## Step 2: Configure and run carmap
+
+This application is nothing but a web server serving the car map web application.
+
+* To configure the web application you must update the Solace Messaging coordinates in `/carmap/src/main/resources/static/TransportProperties.js` with
+```
+TRANSPORT_PROPERTIES = {
+    host : "<Solace Messaging Host or IP>:<port>",
+    vpn  : "<Solace message VPN name>",
+    user : "<Client UserName>",
+    pw   : "<Client Password>",
+}
+```
+
+For example (using Solace Cloud: Web Messaging Transport `ws` )
+```
+TRANSPORT_PROPERTIES = {
+    host : "mr-91b692du2x.messaging.solace.cloud:20259",
+    vpn  : "msgvpn-91b692imr1",
+    user : "solace-cloud-client",
+    pw   : "secret",
+}
+```
+
+* From a shell in the `carmap` directory:
+
+```
+$ ../gradlew build
+```
+
+Then
+```
+$ ../gradlew bootRun
+
+```
+You should now have the carmap spring boot application running on port 8080 [car map](http://localhost:8080). Go to `http://localost:8080` to see the map
+
+
+## Step 3: Configure and run cardemo
+
+This application is nothing but a web server serving the car demo web application.
+
+* To configure the web application you must update the Solace Messaging coordinates in `cardemo/src/main/resources/static/js/build.js` with
+```
+    var TRANSPORT_PROPERTIES = {
+        host : "<Solace Messaging Host or IP>",
+        port : <port>
+        vpn  : "<Solace message VPN name>",
+        user : "<Client UserName>",
+        pw   : "<Client Password>",
+    }
+```
+
+
+For example (using Solace Cloud: web socket MQTT `ws` )
+```
+    var TRANSPORT_PROPERTIES = {
+        host : "mr-91b692du2x.messaging.solace.cloud",
+        port:  20264,
+        vpn  : "msgvpn-91b692imr1",
+        user : "solace-cloud-client",
+        pw   : "secret",
+    }
+```
+
+* From a shell in the `carmap` directory
+```
+$ ../gradlew build
+
+```
+Then
+```
+$ ../gradlew bootRun
+
+```
+You should now have the carmap spring boot application running on port 9090 [car demo](http://localhost:9090). Go to `http://localost:9090
+` to see the map
+
+
+
