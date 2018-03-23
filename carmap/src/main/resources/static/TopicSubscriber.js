@@ -139,6 +139,7 @@ var TopicSubscriber = function (topicName) {
     var tireFaultIcon = {url:"96px_Pivotal-Demo_car-marker_red-marker-blown-tire.png", anchor:{x:21, y:60}};
     var lightFaultIcon = {url:"96px_Pivotal-Demo_car-marker_red-marker-broken-taillight.png", anchor:{x:21, y:60}};
     var engineFaultIcon = {url:"96px_Pivotal-Demo_car-marker_red-marker-busted-engine.png", anchor:{x:21, y:60}};
+    var tz_engineFaultIcon = {url:"96px_Pivotal-Demo_car-marker_red-marker-tz-busted-engine.png", anchor:{x:21, y:60}};
 
 // payload should contain "lat, lng, name, (all original) and new one fault 
 
@@ -215,7 +216,13 @@ var TopicSubscriber = function (topicName) {
         else if (payload.fault == "Light Burnt Out")
             cars[id]["marker"].setIcon(lightFaultIcon);
         else // Engine Trouble
-            cars[id]["marker"].setIcon(engineFaultIcon);
+        {
+            if (name =="TonyZ") {
+                cars[id]["marker"].setIcon(tz_engineFaultIcon);
+            } else {
+                cars[id]["marker"].setIcon(engineFaultIcon);
+            }
+        }
 
         cars[id].fault = payload.fault;
 
