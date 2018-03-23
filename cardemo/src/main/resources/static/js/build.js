@@ -75,8 +75,8 @@ var MyGame = {};
 
     var TRANSPORT_PROPERTIES = {
         host : "mr-91b692du2x.messaging.solace.cloud",
-        port:  20264,
-        vpn  : "msgvpn-91b692imr1",
+        port:  8000,
+        vpn  : "msgvpn-91b693366h",
         user : "solace-cloud-client",
         pw   : "secret",
     }
